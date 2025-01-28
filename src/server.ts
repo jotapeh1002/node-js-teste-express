@@ -1,13 +1,20 @@
 import express from 'express'
-import { rotasPublicas } from '../src/http/routes/public.routes' //onde esta minha rota 
-import 'dotenv/config' //importando o dotenv
+import { rotasPublicas } from '../src/http/routes/public.routes' 
+import 'dotenv/config' 
+import cors from 'cors'
 
-const app = express() //meu express 
+const app = express() 
 
-app.use(express.json()) //indicanddo que vou usar json no express
+app.use(cors())
 
-app.use(rotasPublicas) //registrando minhas rotas igual e feito no fastify
+app.use(cors({
+    origin: '*'
+}))
 
-app.listen(process.env.PORT || 3333, () => {
-    console.log('Servidor rodando na porta 3303')
+app.use(express.json()) 
+
+app.use(rotasPublicas) 
+
+app.listen(process.env.PORT || 1111, () => {
+    console.log(`Servidor rodando na porta ${process.env.PORT}`)
 })

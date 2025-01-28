@@ -1,15 +1,11 @@
-import { Router } from 'express' //rotas do express
-import { StatusCodes } from 'http-status-codes' //status codes do http
-import { request, response } from 'express' //tipagem do typescript do express
+import { Router } from 'express'
+import { cidadeController } from '../controllers/cidade'
 
-const rotasPublicas = Router() //onde vai estar minhas rotas
+const rotasPublicas = Router()
 
-rotasPublicas.get('/', (req: typeof request, res: typeof response) => {
-    res.send('rota publica incial')
-})
+rotasPublicas.get('/create', cidadeController.created)
+rotasPublicas.get('/get', cidadeController.get)
+rotasPublicas.put('/put', cidadeController.put)
+rotasPublicas.delete('/del', cidadeController.del)
 
-rotasPublicas.get('/login', (req: typeof request, res: typeof response) => {
-    res.status(StatusCodes.OK).json({ 'nome': 'joao' })
-})
-
-export { rotasPublicas }
+export { rotasPublicas } 
