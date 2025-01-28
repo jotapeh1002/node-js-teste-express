@@ -1,0 +1,7 @@
+//archivos a quitar
+
+.env
+
+/build
+
+/node_modules
