@@ -1,11 +1,12 @@
 import { Router } from 'express'
-import { cidadeController } from '../controllers/cidade'
+import { cityController,loginController } from '../controllers'
+import { validateToken } from '../middleware'
+import { log } from 'console'
 
-const rotasPublicas = Router()
+const public_routes = Router()
 
-rotasPublicas.get('/create', cidadeController.created)
-rotasPublicas.get('/get', cidadeController.get)
-rotasPublicas.put('/put', cidadeController.put)
-rotasPublicas.delete('/del', cidadeController.del)
+public_routes.post('/', validateToken ,cityController.getAll as any)
 
-export { rotasPublicas } 
+public_routes.post('/login', loginController.login_auth as any)
+
+export { public_routes } 
