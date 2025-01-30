@@ -1,4 +1,4 @@
-import { request, response } from 'express'
+import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import z from 'zod'
 import { PrismaClient } from '@prisma/client'
@@ -9,11 +9,10 @@ const prisma = new PrismaClient()
 const getAllSchema = z.object({
     name: z.string(),
     email: z.string(),
-    password: z.string()
+    password: z.string(),
 })
 
-export const getAll = async (req: typeof request, res: typeof response) => {
-
+export const getAll = async (req: Request, res: Response): Promise<void> => {
     const { name, email, password } = getAllSchema.parse(req.body)
 
     const passwordHash = await bcrypt.hash(password, 10)
@@ -23,15 +22,13 @@ export const getAll = async (req: typeof request, res: typeof response) => {
             data: {
                 name,
                 email,
-                password: passwordHash
-            }
+                password: passwordHash,
+            },
         })
 
         res.status(StatusCodes.CREATED).json({ name, email, password })
-
     } catch (error) {
         console.log(error)
-        return res.status(StatusCodes.BAD_REQUEST).json(error)
+        res.status(StatusCodes.BAD_REQUEST).json(error)
     }
-
 }
